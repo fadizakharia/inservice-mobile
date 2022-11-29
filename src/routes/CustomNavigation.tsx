@@ -1,18 +1,14 @@
-import { View, Text } from "react-native";
 import React, { useEffect } from "react";
-import { AppDispatch, RootState } from "../store/";
-import {
-  useCurrentUserQuery,
-  useLazyCurrentUserQuery,
-} from "../store/features/services/auth";
 import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../store/";
 import { setUser } from "../store/features/auth-slice";
+import { useLazyCurrentUserQuery } from "../store/features/services/auth";
 import { IAuthState } from "../store/types/auth";
-import OnBoardingStack from "./OnBoardingNavigation";
 import AppBottomNavigation from "./AppBottomNavigation";
+import OnBoardingStack from "./OnBoardingNavigation";
 
 const CustomNavigation = () => {
-  const [fetch, {}] = useLazyCurrentUserQuery(undefined);
+  const [fetch, { data }] = useLazyCurrentUserQuery(undefined);
   const auth = useSelector<RootState, RootState["auth"]>((root) => root.auth);
   const dispatch = useDispatch<AppDispatch>();
 
@@ -29,7 +25,7 @@ const CustomNavigation = () => {
     };
     initialLoad();
     return () => {};
-  }, []);
+  }, [JSON.stringify(data)]);
   console.log(auth);
 
   return !Boolean(auth.username) ? (

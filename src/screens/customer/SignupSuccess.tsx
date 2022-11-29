@@ -1,12 +1,12 @@
-import { StyleSheet, View } from "react-native";
-import React from "react";
-import { Button, Text } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import React from "react";
+import { StyleSheet, View } from "react-native";
+import { Button, Text } from "react-native-paper";
 import {
   NavigationOptions,
   OnBoardingStackParamList,
 } from "../../routes/OnBoardingNavigation";
-import { StackNavigationProp } from "@react-navigation/stack";
 
 const SignupSuccess = () => {
   const navigator =

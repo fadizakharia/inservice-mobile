@@ -1,26 +1,27 @@
+import { useNavigation } from "@react-navigation/native";
+import { Formik } from "formik";
+import React from "react";
 import {
-  StyleSheet,
-  View,
   Image,
   KeyboardAvoidingView,
   Platform,
+  StyleSheet,
+  View,
 } from "react-native";
-import { TextInput, Button, Text, ActivityIndicator } from "react-native-paper";
-import { Formik } from "formik";
-import React from "react";
-import { loginValidation } from "../../util/validation";
-import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { Button, Text, TextInput } from "react-native-paper";
+import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/vendor/types";
+import { useDispatch } from "react-redux";
+import Spinner from "../../components/Spinner";
 import {
   NavigationOptions,
   OnBoardingStackParamList,
 } from "../../routes/OnBoardingNavigation";
-import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/vendor/types";
-import { useLoginMutation } from "../../store/features/services/auth";
-import { setUser } from "../../store/features/auth-slice";
-import { IAuthState } from "../../store/types/auth";
-import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
+import { setUser } from "../../store/features/auth-slice";
+import { useLoginMutation } from "../../store/features/services/auth";
+import { IAuthState } from "../../store/types/auth";
+import { loginValidation } from "../../util/validation";
 
 export default function Login() {
   const dispatch = useDispatch<AppDispatch>();
@@ -35,7 +36,6 @@ export default function Login() {
       const payload = await login({
         username: values.email,
         password: values.password,
-        isProvider: false,
       }).unwrap();
       dispatch(setUser(payload as IAuthState));
     } catch (err) {
@@ -119,9 +119,7 @@ export default function Login() {
               </View>
             </View>
           ) : (
-            <View style={styles.root}>
-              <ActivityIndicator />
-            </View>
+            <Spinner />
           )}
         </KeyboardAvoidingView>
       )}

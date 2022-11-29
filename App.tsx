@@ -1,25 +1,30 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-import StackNavigator from "@react-navigation/stack";
+import { NavigationContainer } from "@react-navigation/native";
+import * as fonts from "expo-font";
+import * as Location from "expo-location";
 import { hideAsync, preventAutoHideAsync } from "expo-splash-screen";
 import { useCallback, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import * as fonts from "expo-font";
-import OnBoardingStack from "./src/routes/OnBoardingNavigation";
-import { Button, Provider } from "react-native-paper";
-import store from "./src/store/";
-import { Provider as ReduxProvider } from "react-redux";
-import { NavigationContainer } from "@react-navigation/native";
+import { StyleSheet, Text, View } from "react-native";
 import "react-native-gesture-handler";
-import CustomDefaultTheme from "./src/styles/theme";
-import { useCurrentUserQuery } from "./src/store/features/services/auth";
-import { setUser } from "./src/store/features/auth-slice";
-import { IAuthState } from "./src/store/types/auth";
-import AppBottomNavigation from "./src/routes/AppBottomNavigation";
+import { Provider } from "react-native-paper";
+import { Provider as ReduxProvider } from "react-redux";
 import CustomNavigation from "./src/routes/CustomNavigation";
+import store from "./src/store/";
+import CustomDefaultTheme from "./src/styles/theme";
+
 preventAutoHideAsync();
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
+  useEffect(() => {
+    const loadLocationPermission = async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        return;
+      }
+    };
+    loadLocationPermission();
+    return () => {};
+  }, []);
+
   useEffect(() => {
     const prepare = async () => {
       try {

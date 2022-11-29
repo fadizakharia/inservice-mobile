@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 
-const Services = () => {
+const NearbyServices = () => {
   return (
     <View>
-      <Text>Services</Text>
+      <Text>NearbyServices</Text>
     </View>
   );
 };
 
-export default Services;
+export default NearbyServices;
 
 const styles = StyleSheet.create({});

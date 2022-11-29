@@ -5,8 +5,11 @@ export interface USER_PAYLOAD {
   last_name: string;
 }
 export interface IAuthState {
-  username: string;
+  _id: string;
   first_name: string;
   last_name: string;
   auth_type: string;
+  username: string;
+  date_of_birth: Date;
+  profilePicture: string;
 }

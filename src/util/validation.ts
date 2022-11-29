@@ -10,6 +10,7 @@ export const signupValidation = yup.object().shape({
   first_name: yup.string().required(),
   last_name: yup.string().required(),
   email: yup.string().email().required(),
+  date_of_birth: yup.string(),
   password: yup
     .string()
     .matches(

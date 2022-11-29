@@ -1,17 +1,18 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
+import Constants from "expo-constants";
 import { error } from "../../../util/error";
 import { IAuthState } from "../../types/auth";
-
 const authApi = createApi({
-  baseQuery: process.env.REACT_APP_BASE_URL
-    ? fetchBaseQuery({ baseUrl: process.env.REACT_APP_BASE_URL })
-    : fetchBaseQuery({ baseUrl: "https://f00a-185-104-255-78.ngrok.io" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: Constants.manifest!.extra!.BASE_URL,
+    credentials: "include",
+  }),
   reducerPath: "authApi",
 
   endpoints: (build) => ({
     login: build.mutation<
       Partial<IAuthState>,
-      { username: string; password: string; isProvider: boolean }
+      { username: string; password: string }
     >({
       query: (arg) => ({
         url: "auth/local",
@@ -19,7 +20,6 @@ const authApi = createApi({
         body: {
           username: arg.username,
           password: arg.password,
-          isProvider: arg.isProvider,
         },
         credentials: "include",
       }),
@@ -33,6 +33,7 @@ const authApi = createApi({
         last_name: string;
         auth_type: string;
         isProvider: boolean;
+        date_of_birth: Date;
       }
     >({
       query: (arg) => ({
@@ -49,10 +50,11 @@ const authApi = createApi({
         method: "GET",
       }),
     }),
-    logout: build.mutation<{ status: boolean }, string>({
-      query: (id) => ({
-        url: `auth/${id}`,
+    logout: build.mutation<{ status: boolean }, undefined>({
+      query: () => ({
+        url: `auth/`,
         method: "DELETE",
+        credentials: "include",
       }),
     }),
   }),
